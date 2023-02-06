@@ -18,16 +18,18 @@ public class ModelLoader : MonoBehaviour
             name = "Model"
         };
         DownloadFile(
-            "https://d35lsekltq0ycz.cloudfront.net/vr-mapper/mesh.glb");
+            "https://d35lsekltq0ycz.cloudfront.net/vr-mapper/mesh_v2.glb");
     }
     public void DownloadFile(string url)
     {
         string path = GetFilePath(url);
         if (File.Exists(path))
         {
-            Debug.Log("Found file locally, loading...");
-            LoadModel(path);
-            return;
+            Debug.Log("Found file locally, deleting...");
+            File.Delete(path);
+            // Debug.Log("Found file locally, loading...");
+            // LoadModel(path);
+            // return;
         }
 
         StartCoroutine(GetFileRequest(url, (UnityWebRequest req) =>
@@ -57,6 +59,8 @@ public class ModelLoader : MonoBehaviour
         ResetWrapper();
         GameObject model = Importer.LoadFromFile(path);
         model.transform.SetParent(wrapper.transform);
+        wrapper.transform.rotation *= Quaternion.Euler(Vector3.right * -90.0f);
+        wrapper.transform.position = new Vector3(1.3f, 1.19f, 0.49f);
     }
 
     IEnumerator GetFileRequest(string url, Action<UnityWebRequest> callback)
