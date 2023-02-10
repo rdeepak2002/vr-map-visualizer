@@ -18,7 +18,7 @@ public class ModelLoader : MonoBehaviour
             name = "Model"
         };
         DownloadFile(
-            "https://d35lsekltq0ycz.cloudfront.net/vr-mapper/mesh_v2.glb");
+            "https://vr-drone-mapper.s3.amazonaws.com/models/mesh.glb");
     }
     public void DownloadFile(string url)
     {
